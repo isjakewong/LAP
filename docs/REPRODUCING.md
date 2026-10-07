@@ -1,6 +1,6 @@
-# Reproducing the paper
+# Reproducing the Paper
 
-## Experiment groups
+## Experiment Groups
 
 `python reproduce.py list --group <group>` lists the runs of each group. Every run has an entry in `configs/experiments.json` with its recipe, seed, step count, sampling setup and, where archived, its metrics.
 
@@ -15,7 +15,7 @@
 | Predictable-only target and prediction-loss interventions | `mechanism`, `development` | as Table 1; development runs use the proxy metric below |
 | Batch 256, SiT-L/XL, alignment depth 4 | `scale` | step counts per entry; guided check uses `sample.py --cfg-scale 1.5` |
 
-## Experiment names
+## Experiment Names
 
 | Name part | Meaning |
 |---|---|
@@ -33,7 +33,7 @@
 | `rs`, `aid`, `dev200` | RESISC45, AID, 200-class ImageNet development set |
 | `_s1`, `_s2`, `_s3` | training seed (no suffix: seed 0) |
 
-## Training details
+## Training Details
 
 The configs use AdamW (lr 1e-4, betas (0.9, 0.999), no weight decay), gradient clipping at 1, fp16 with TF32, EMA 0.9999, uniform timesteps, the linear interpolant with velocity prediction, and label dropout 0.1.
 
@@ -50,7 +50,7 @@ python probe_purified.py --data-dir data/in256_dev200 \
   --purifiers assets/purifier_mae_k5.pt assets/purifier_dinov2_k3.pt --out results/probe_purified.json
 ```
 
-## Development metric
+## Development Metric
 
 The `development` runs (dev-200, 50K steps) are compared with a proxy FID computed on normalized DINOv2 CLS features, with Euler ODE-50 sampling and a fresh 10K real reference. It is not comparable to Inception FID.
 
@@ -64,7 +64,7 @@ python target_utility.py --enc mae-vit-l --data-dir data/in256_dev200 \
 
 `run_diagnostics.py` gives the earlier token-split presence/use diagnostics reported for the development runs. `dev200_aa_raw` is the 50K DINOv2 reference for the encoder-utility comparison; `dev200_repa` is the 100K reference for the prediction-loss runs.
 
-## Constant-readout score
+## Constant-Readout Score
 
 ```bash
 python analysis_constant_baseline.py --data-dir data/in256_dev200 --tag dev200 --batches 32 --seed 0 \
@@ -78,7 +78,7 @@ python scripts/verify_sweep_statistics.py
 
 Archived outputs are `results/constant_baseline_{dev200,in1k}.json` and `results/sweep_{100k,400k}.json`. The score uses 2,048 images in batches of 64 with one posterior sample per image. C₀ is the norm of the mean unit-normalized target token. The 400K sweep points continue the same runs: append `--max-train-steps 400000` to `reproduce.py train`. `verify_sweep_statistics.py` recomputes the exact permutation tests (eight new encoders) and the Monte Carlo tests (all 13) from the archived seed results.
 
-## Hidden-state probes
+## Hidden-State Probes
 
 ```bash
 python probe_image_disjoint.py --data data/in1k_256 --out outputs/probes \
@@ -87,7 +87,7 @@ python probe_image_disjoint.py --data data/in1k_256 --out outputs/probes \
 
 This measures presence, velocity sufficiency and causal use of the aligned subspace, fitting on 1,024 images and evaluating on 256 disjoint images (t ∈ [0.3, 0.7), rank 256, 2,000 bootstrap replicates). It reads `outputs/in1k_<name>/checkpoints/0400000.pt`, falling back to `checkpoints/diffusion/in1k_<name>.pt`, so the command above runs on the released checkpoints. Archived results are in `results/image_disjoint_probes.json`. The paper's numbers use the seeds in the script's default model list, which also needs `aa_res`, `lapk3` and `uca_ls2.0` trained from their configs.
 
-## Notes on exact reproduction
+## Notes on Exact Reproduction
 
 - Training is not bitwise reproducible: GPU kernels are nondeterministic, and some original runs were resumed without data-loader or RNG state.
 - `in1k_e2esd_vanilla_s1` was trained by a collaborator; only rounded metrics exist, and its config is the seed-0 recipe with seed 1.

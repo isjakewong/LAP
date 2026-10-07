@@ -1,8 +1,8 @@
-# Data and teachers
+# Data and Teachers
 
 No images, teacher weights or VAE weights are distributed with this code.
 
-## Dataset layout
+## Dataset Layout
 
 Training reads paired RGB images and cached SD-VAE posterior moments:
 
@@ -30,7 +30,7 @@ Images are converted to RGB, resized bicubically so the short side is 256, and c
 
 The corpus used in the paper contained 1,272,453 images, slightly fewer than the canonical 1,281,167; we could not establish why. Its class counts and manifest hashes are in `results/reproducibility_manifest.json`. A fresh preparation reproduces the recipe, not that exact corpus.
 
-## dev-200 (development experiments)
+## dev-200 (Development Experiments)
 
 Classes 0–199 of `evanarlian/imagenet_1k_resized_256`, all images (255,224), labels not remapped:
 
