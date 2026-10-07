@@ -21,9 +21,14 @@ split. A purifier size k is feasible when its residual keeps class accuracy with
 of linres and beats its own predicted component by more than 2 SE.
 
 Example:
-  python probe_purified.py --data-dir data/in256_dev200 \
+  python analysis/probe_purified.py --data-dir data/in256_dev200 \
       --purifiers assets/purifier_mae_k5.pt assets/purifier_dinov2_k3.pt --out probe.json
 """
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repository root
+
 import argparse
 import json
 import os

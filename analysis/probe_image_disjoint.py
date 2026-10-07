@@ -4,6 +4,11 @@ Probes are fit on 1,024 images and evaluated on 256 disjoint images at t in [0.3
 see docs/REPRODUCING.md. Checkpoints are read from outputs/in1k_<name>/checkpoints/
 0400000.pt, falling back to the released checkpoints/diffusion/in1k_<name>.pt.
 """
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repository root
+
 import argparse
 import gc
 import hashlib
@@ -121,7 +126,7 @@ def prepare(args):
     for k, v in cache.items():
         assert torch.isfinite(v).all(), k
     torch.save(cache, args.out / 'inputs.pt')
-    sources = ['diagnostics.py', 'run_diagnostics.py', 'models/sit.py',
+    sources = ['analysis/diagnostics.py', 'analysis/run_diagnostics.py', 'models/sit.py',
                'models/purifier.py', 'train_purifier.py', 'utils.py']
     source_dir = args.out / 'source_snapshot'
     source_dir.mkdir(exist_ok=True)
@@ -219,7 +224,7 @@ def projector(W, rank=256):
 
 @torch.inference_mode()
 def run_model(args, name):
-    from run_diagnostics import build_model_from_ckpt
+    from utils import build_model_from_ckpt
     from diagnostics import capture_hidden, linear_interpolant, patchify_velocity, ablate_forward
     ckpath = args.root / f'outputs/in1k_{name}/checkpoints/0400000.pt'
     if not ckpath.exists():

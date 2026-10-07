@@ -43,12 +43,13 @@ Per-seed metrics for every run are in [`configs/experiments.json`](configs/exper
 4. ```models/```: SiT backbone and teacher encoder wrappers
 5. ```reproduce.py```: Lists and launches every paper experiment
 6. ```configs/```: One recipe per experiment; ```experiments.json``` records seeds, step counts and metrics
-7. ```sample.py```, ```samplers.py```, ```evaluations/```: Sampling and ADM FID evaluation
-8. ```preprocessing/```: Dataset download, VAE encoding and FID reference batches
-9. ```analysis_constant_baseline.py```, ```probe_image_disjoint.py```, ```probe_purified.py```, ```run_diagnostics.py```, ```gen_fid.py```, ```target_utility.py```: Diagnostics
-10. ```scripts/```: Checkpoint download, result summaries and sweep statistics
-11. ```results/```: Archived results behind the paper's figures and tables
-12. ```docs/```: [Data preparation](docs/DATA.md) and the [reproduction guide](docs/REPRODUCING.md)
+7. ```sample.py```, ```samplers.py```: EMA sampling (SDE and ODE) to PNGs and an ADM-format `.npz`
+8. ```evaluations/```: ADM FID evaluator with its own `requirements.txt`
+9. ```preprocessing/```: Dataset download, VAE encoding and FID reference batches
+10. ```analysis/```: Constant-readout score, hidden-state probes, purifier audit and the development proxy FID
+11. ```scripts/```: Checkpoint download, result summaries and sweep statistics
+12. ```results/```: Archived results behind the paper's figures and tables
+13. ```docs/```: [Data preparation](docs/DATA.md) and the [reproduction guide](docs/REPRODUCING.md)
 
 <a name="getting_started"></a>
 ## Getting Started
@@ -129,7 +130,7 @@ torchrun --standalone --nproc_per_node=4 sample.py --ckpt checkpoints/diffusion/
 Sampling follows the paper: EMA weights, Euler–Maruyama SDE with 250 steps, no guidance. FID uses the [ADM evaluator](https://github.com/openai/guided-diffusion/tree/main/evaluations) in a separate TensorFlow environment:
 
 ```bash
-python3.10 -m venv .venv-eval && .venv-eval/bin/pip install -r requirements-eval.txt
+python3.10 -m venv .venv-eval && .venv-eval/bin/pip install -r evaluations/requirements.txt
 .venv-eval/bin/python evaluations/evaluator.py VIRTUAL_imagenet256_labeled.npz samples/mae_lapn.npz
 ```
 

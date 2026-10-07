@@ -43,10 +43,10 @@ The compositions use the shared block-8, batch-64 recipe rather than each method
 
 ## Purifiers
 
-`python reproduce.py purifier <experiment>` trains the frozen LAP-N predictor with the arguments in `configs/purifiers.json` (20K steps, 4,096 held-out images; receptive field 3 for DINOv2 and CLIP, 5 for MAE, AIMv2 and DINOv3). `probe_purified.py` audits how much class information each target keeps (raw, LAP-L, LAP-N and the removed components), using images held out from purifier training:
+`python reproduce.py purifier <experiment>` trains the frozen LAP-N predictor with the arguments in `configs/purifiers.json` (20K steps, 4,096 held-out images; receptive field 3 for DINOv2 and CLIP, 5 for MAE, AIMv2 and DINOv3). `analysis/probe_purified.py` audits how much class information each target keeps (raw, LAP-L, LAP-N and the removed components), using images held out from purifier training:
 
 ```bash
-python probe_purified.py --data-dir data/in256_dev200 \
+python analysis/probe_purified.py --data-dir data/in256_dev200 \
   --purifiers assets/purifier_mae_k5.pt assets/purifier_dinov2_k3.pt --out results/probe_purified.json
 ```
 
@@ -55,22 +55,22 @@ python probe_purified.py --data-dir data/in256_dev200 \
 The `development` runs (dev-200, 50K steps) are compared with a proxy FID computed on normalized DINOv2 CLS features, with Euler ODE-50 sampling and a fresh 10K real reference. It is not comparable to Inception FID.
 
 ```bash
-python gen_fid.py --ckpt outputs/dev200_mae_raw/checkpoints/0050000.pt \
+python analysis/gen_fid.py --ckpt outputs/dev200_mae_raw/checkpoints/0050000.pt \
   --data-dir data/in256_dev200 --num-samples 10000 --num-classes 200 \
   --steps 50 --batch 50 --out results/dev_mae_raw.json
-python target_utility.py --enc mae-vit-l --data-dir data/in256_dev200 \
+python analysis/target_utility.py --enc mae-vit-l --data-dir data/in256_dev200 \
   --out results/mae_utility.json
 ```
 
-`run_diagnostics.py` gives the earlier token-split presence/use diagnostics reported for the development runs. `dev200_aa_raw` is the 50K DINOv2 reference for the encoder-utility comparison; `dev200_repa` is the 100K reference for the prediction-loss runs.
+`analysis/run_diagnostics.py` gives the earlier token-split presence/use diagnostics reported for the development runs. `dev200_aa_raw` is the 50K DINOv2 reference for the encoder-utility comparison; `dev200_repa` is the 100K reference for the prediction-loss runs.
 
 ## Constant-Readout Score
 
 ```bash
-python analysis_constant_baseline.py --data-dir data/in256_dev200 --tag dev200 --batches 32 --seed 0 \
+python analysis/constant_baseline.py --data-dir data/in256_dev200 --tag dev200 --batches 32 --seed 0 \
   --purifiers mae-vit-l=assets/purifier_mae_k5.pt,dinov2-vit-b=assets/purifier_dinov2_k3.pt,clip-vit-L=assets/purifier_clip_k3.pt \
   --out results/c0_dev200.json
-python analysis_constant_baseline.py --data-dir data/in256_dev200 --tag sweep \
+python analysis/constant_baseline.py --data-dir data/in256_dev200 --tag sweep \
   --encoders mae-vit-b,clip16-vit-b,dinov2-vit-s,dinov2-vit-l,pespatial-vit-b,dinov3-vit-l,dinov3-vit-hplus,pecore-vit-l \
   --out results/c0_sweep.json
 python scripts/verify_sweep_statistics.py
@@ -81,7 +81,7 @@ Archived outputs are `results/constant_baseline_{dev200,in1k}.json` and `results
 ## Hidden-State Probes
 
 ```bash
-python probe_image_disjoint.py --data data/in1k_256 --out outputs/probes \
+python analysis/probe_image_disjoint.py --data data/in1k_256 --out outputs/probes \
   --models vanilla_s1 mae_res mae_lapk5_s1 repa_s1
 ```
 

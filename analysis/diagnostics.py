@@ -12,6 +12,11 @@ Presence vs. use of the alignment target in a trained SiT, per noise bin b.
 All model interaction goes through forward hooks. The aligned layer l is block index
 encoder_depth - 1, whose output the alignment projector reads.
 """
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repository root
+
 import numpy as np
 import torch
 import torch.nn as nn

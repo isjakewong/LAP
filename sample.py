@@ -13,7 +13,7 @@ import torch.distributed as dist
 from diffusers import AutoencoderKL
 from tqdm import trange
 
-from run_diagnostics import build_model_from_ckpt
+from utils import build_model_from_ckpt
 from samplers import euler_sampler, euler_maruyama_sampler
 from utils import load_latents_stats
 

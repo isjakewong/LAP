@@ -6,10 +6,15 @@ Samples EMA weights with the Euler ODE sampler, decodes with the run's VAE, and 
 against a fresh shuffled real reference of the same size.
 
 Example:
-  python gen_fid.py --ckpt outputs/dev200_mae_raw/checkpoints/0050000.pt \
+  python analysis/gen_fid.py --ckpt outputs/dev200_mae_raw/checkpoints/0050000.pt \
     --data-dir data/in256_dev200 --num-samples 10000 --num-classes 200 \
     --steps 50 --batch 50 --out results/dev_mae_new.json
 """
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repository root
+
 import argparse, json
 import numpy as np
 import torch
@@ -48,7 +53,7 @@ def main():
     args = ap.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    from run_diagnostics import build_model_from_ckpt
+    from utils import build_model_from_ckpt
     from samplers import euler_sampler
     from diffusers.models import AutoencoderKL
     from utils import load_encoders

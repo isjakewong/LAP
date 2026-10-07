@@ -1,6 +1,6 @@
 # Data and Teachers
 
-No images, teacher weights or VAE weights are distributed with this code.
+No images, teacher weights or VAE weights are distributed with this code. The preparation scripts need two extra packages: `pip install -r preprocessing/requirements.txt`.
 
 ## Dataset Layout
 

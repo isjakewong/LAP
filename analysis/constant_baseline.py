@@ -13,10 +13,15 @@ Targets follow train.py exactly, on consecutive batches of 64 images:
   lapn (frozen purifier residual), and for DINOv2 also xpred (predictable component).
 
 Usage:
-  python analysis_constant_baseline.py --data-dir data/in256_dev200 --tag dev200 \
+  python analysis/constant_baseline.py --data-dir data/in256_dev200 --tag dev200 \
       --purifiers mae-vit-l=assets/purifier_mae_k5.pt,dinov2-vit-b=assets/purifier_dinov2_k3.pt \
       --batches 32 --out results/c0_new.json
 """
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repository root
+
 import argparse, json, time
 import torch
 from torch.utils.data import DataLoader

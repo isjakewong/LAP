@@ -4,9 +4,14 @@ patchified clean latent. Per-token ridge probe with a contiguous 80/20 fit/evalu
 split; no diffusion checkpoint is needed because this is a property of the target alone.
 
 Usage:
-  python target_utility.py --enc mae-vit-l --data-dir data/in256_dev200 \
+  python analysis/target_utility.py --enc mae-vit-l --data-dir data/in256_dev200 \
       --out results/mae_utility_new.json
 """
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repository root
+
 import argparse
 import json
 
