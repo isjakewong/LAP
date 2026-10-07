@@ -16,6 +16,8 @@ Linux, Python 3.10 and a CUDA GPU. `requirements.txt` pins the tested environmen
 ```bash
 python3.10 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+pip install "setuptools<81" wheel && pip install --no-build-isolation \
+  git+https://github.com/openai/CLIP.git@a1d071733d7111c9c014f024669f959182114e33
 python -m unittest discover -s tests -v
 ```
 

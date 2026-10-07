@@ -13,5 +13,6 @@ jobs:
           cache: pip
       - run: pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cpu
       - run: pip install -r requirements.txt
+      - run: pip install "setuptools<81" wheel && pip install --no-build-isolation git+https://github.com/openai/CLIP.git@a1d071733d7111c9c014f024669f959182114e33 && python -c "import clip"
       - run: python -m unittest discover -s tests -v
       - run: python scripts/verify_sweep_statistics.py --output /tmp/sweep-statistics.json
