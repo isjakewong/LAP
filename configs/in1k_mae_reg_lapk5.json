@@ -1,0 +1,8 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "mae-vit-l",
+  "target_mode": "purified",
+  "reg_cls_beta": 0.03,
+  "purifier_ckpt": "assets/purifier1k_mae_k5.pt",
+  "checkpointing_steps": 100000
+}

@@ -1,0 +1,6 @@
+{
+  "model": "SiT-B/2",
+  "encoder_depth": 4,
+  "target_mode": "residual",
+  "checkpointing_steps": 100000
+}

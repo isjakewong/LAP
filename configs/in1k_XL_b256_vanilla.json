@@ -1,0 +1,6 @@
+{
+  "model": "SiT-XL/2",
+  "gradient_accumulation_steps": 4,
+  "proj_coeff": 0.0,
+  "checkpointing_steps": 25000
+}

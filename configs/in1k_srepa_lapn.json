@@ -1,0 +1,8 @@
+{
+  "model": "SiT-B/2",
+  "proj_coeff": 1.0,
+  "target_mode": "purified",
+  "struc_coeff": 2.0,
+  "purifier_ckpt": "assets/purifier1k_dinov2_k3.pt",
+  "checkpointing_steps": 100000
+}

@@ -1,0 +1,8 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "mae-vit-l",
+  "proj_weight_schedule": "sigmoid",
+  "target_mode": "purified",
+  "purifier_ckpt": "assets/purifier1k_mae_k5.pt",
+  "checkpointing_steps": 100000
+}

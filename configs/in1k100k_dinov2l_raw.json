@@ -1,0 +1,5 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "dinov2-vit-l",
+  "checkpointing_steps": 25000
+}

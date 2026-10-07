@@ -1,0 +1,6 @@
+# Install in a separate Python 3.10 venv for the original ADM evaluator.
+tensorflow-cpu==2.19.1
+scipy==1.14.1
+numpy==2.1.3
+requests
+tqdm

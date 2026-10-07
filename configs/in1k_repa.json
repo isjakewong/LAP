@@ -1,0 +1,4 @@
+{
+  "model": "SiT-B/2",
+  "checkpointing_steps": 100000
+}

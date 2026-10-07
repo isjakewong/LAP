@@ -1,0 +1,2216 @@
+{
+  "meta": {
+    "created": "2026-09-23 22:50:43 EDT",
+    "models": "SiT-B/2, batch 64, SD-VAE (ft-mse latents), ImageNet-1k 256px, 400K steps, REPA depth 8, proj coeff 0.5 (0 for unaligned); checkpoints outputs/in1k_<tag>/checkpoints/0N00000.pt (EMA)",
+    "mapping": {
+      "MAE": {
+        "raw": {
+          "seed0": "mae_raw",
+          "seed1": "mae_raw_s1",
+          "encoder": "mae-vit-l",
+          "purifier": null
+        },
+        "LAP-L": {
+          "seed0": "mae_res",
+          "seed1": "mae_res_s1",
+          "encoder": "mae-vit-l",
+          "purifier": null
+        },
+        "LAP-N": {
+          "seed0": "mae_lapk5",
+          "seed1": "mae_lapk5_s1",
+          "encoder": "mae-vit-l",
+          "purifier": "assets/purifier1k_mae_k5.pt"
+        }
+      },
+      "AIMv2": {
+        "raw": {
+          "seed0": "aimv2_raw",
+          "seed1": "aimv2_raw_s1",
+          "encoder": "aimv2-vit-l",
+          "purifier": null
+        },
+        "LAP-L": {
+          "seed0": "aimv2_lapl",
+          "seed1": "aimv2_lapl_s1",
+          "encoder": "aimv2-vit-l",
+          "purifier": null
+        }
+      },
+      "CLIP": {
+        "raw": {
+          "seed0": "clip_raw",
+          "seed1": "clip_raw_s1",
+          "encoder": "clip-vit-L",
+          "purifier": null
+        },
+        "LAP-L": {
+          "seed0": "clip_res",
+          "seed1": "clip_res_s1",
+          "encoder": "clip-vit-L",
+          "purifier": null
+        },
+        "LAP-N": {
+          "seed0": "clip_lapk3",
+          "seed1": "clip_lapk3_s1",
+          "encoder": "clip-vit-L",
+          "purifier": "assets/purifier1k_clip_k3.pt"
+        }
+      },
+      "DINOv3": {
+        "raw": {
+          "seed0": "dinov3_raw",
+          "seed1": "dinov3_raw_s1",
+          "encoder": "dinov3-vit-b",
+          "purifier": null
+        },
+        "LAP-L": {
+          "seed0": "dinov3_lapl",
+          "seed1": "dinov3_lapl_s1",
+          "encoder": "dinov3-vit-b",
+          "purifier": null
+        }
+      },
+      "DINOv2": {
+        "raw": {
+          "seed0": "repa",
+          "seed1": "repa_s1",
+          "encoder": "dinov2-vit-b",
+          "purifier": null
+        },
+        "LAP-L": {
+          "seed0": "aa_res",
+          "seed1": "aa_res_s1",
+          "encoder": "dinov2-vit-b",
+          "purifier": null
+        },
+        "LAP-N": {
+          "seed0": "lapk3",
+          "seed1": "lapk3_s1",
+          "encoder": "dinov2-vit-b",
+          "purifier": "assets/purifier1k_dinov2_k3.pt"
+        }
+      },
+      "Unaligned": {
+        "none": {
+          "seed0": "vanilla",
+          "seed1": "vanilla_s1",
+          "encoder": null,
+          "purifier": null
+        }
+      }
+    },
+    "target_names": {
+      "raw": "REPA, raw teacher tokens (target_mode raw)",
+      "LAP-L": "per-batch least-squares affine residual on the patchified clean latent (target_mode residual)",
+      "LAP-N": "frozen local purifier residual (target_mode purified)",
+      "none": "no alignment (proj coeff 0)"
+    },
+    "nesting": "data[teacher][target][seed][step]",
+    "metric": "Inception FID-10K and sFID/IS/precision/recall from the ADM evaluator against the ImageNet-256 reference batch (same reference and code as the paper FID-50K). Samples: generate.py, SDE Euler-Maruyama 250 steps, no CFG, global seed 0, batch 64, 1 GPU, EMA weights.",
+    "step_400000": "first 10,000 samples of the existing 50K sample file of the 400K checkpoint (no resampling). generate.py draws noise/labels batch by batch from one seeded stream, so these are exactly the samples a 10K run of that checkpoint would draw on the same GPU model.",
+    "steps_100000_300000": "fresh 10K samples, gen50k.sbatch NS=10000 with the same seed/batch. On the same GPU model the noise (z, labels, SDE noise) equals that of the 400K draw for every sample; across GPU models torch's CUDA RNG launch grid differs (SM count), so only the first batch positions of every 64 share noise: 0-53 between A100 and H100 (verified on PNGs 2026-09-23), 0-39 between a V100 and either. Per point: gpu, gpu_400k_draw, noise_shared_with_400k.",
+    "fid50k_400k": "results/adm_<tag>.json (original draw). NOTE: the paper uses a fresh re-evaluation draw for the three base DINOv2 rows (raw/LAP-L/LAP-N: 41.75/41.47/42.11), so paper DINOv2 FID-50K values differ from fid50k_400k here by 0.1-0.4.",
+    "missing": [],
+    "fid50k_400k_values": {
+      "MAE": {
+        "raw": {
+          "0": {
+            "fid": 53.684592207074274,
+            "sfid": 7.796559950136839,
+            "inception_score": 25.98221778869629,
+            "precision": 0.43546,
+            "recall": 0.5979
+          },
+          "1": {
+            "fid": 52.411476887925005,
+            "sfid": 7.771017744345613,
+            "inception_score": 26.619415283203125,
+            "precision": 0.44148,
+            "recall": 0.5997
+          }
+        },
+        "LAP-L": {
+          "0": {
+            "fid": 44.80759079601307,
+            "sfid": 7.699963361716186,
+            "inception_score": 31.612934112548828,
+            "precision": 0.48398,
+            "recall": 0.6193
+          },
+          "1": {
+            "fid": 45.48273011793941,
+            "sfid": 7.6191299982816645,
+            "inception_score": 31.259597778320312,
+            "precision": 0.47662,
+            "recall": 0.6149
+          }
+        },
+        "LAP-N": {
+          "0": {
+            "fid": 43.05549449665375,
+            "sfid": 7.836133816970914,
+            "inception_score": 33.54155731201172,
+            "precision": 0.4913,
+            "recall": 0.6155
+          },
+          "1": {
+            "fid": 41.53489250916539,
+            "sfid": 7.570469997636565,
+            "inception_score": 34.167015075683594,
+            "precision": 0.50032,
+            "recall": 0.629
+          }
+        }
+      },
+      "AIMv2": {
+        "raw": {
+          "0": {
+            "fid": 48.08406549471215,
+            "sfid": 7.798069673877762,
+            "inception_score": 29.871658325195312,
+            "precision": 0.46386,
+            "recall": 0.6193
+          },
+          "1": {
+            "fid": 47.86519379051845,
+            "sfid": 7.867243522786794,
+            "inception_score": 29.890304565429688,
+            "precision": 0.4632,
+            "recall": 0.6097
+          }
+        },
+        "LAP-L": {
+          "0": {
+            "fid": 44.40182879714638,
+            "sfid": 7.741609505863721,
+            "inception_score": 32.43922805786133,
+            "precision": 0.48352,
+            "recall": 0.6258
+          },
+          "1": {
+            "fid": 44.22118545511722,
+            "sfid": 7.946244025575879,
+            "inception_score": 32.89642333984375,
+            "precision": 0.48388,
+            "recall": 0.6174
+          }
+        }
+      },
+      "CLIP": {
+        "raw": {
+          "0": {
+            "fid": 44.73151063596629,
+            "sfid": 8.035245114356485,
+            "inception_score": 32.30116653442383,
+            "precision": 0.48308,
+            "recall": 0.6099
+          },
+          "1": {
+            "fid": 44.73861647436445,
+            "sfid": 7.697403945304131,
+            "inception_score": 32.122215270996094,
+            "precision": 0.47844,
+            "recall": 0.6196
+          }
+        },
+        "LAP-L": {
+          "0": {
+            "fid": 42.077232031108906,
+            "sfid": 7.83097615176257,
+            "inception_score": 34.370140075683594,
+            "precision": 0.49604,
+            "recall": 0.6235
+          },
+          "1": {
+            "fid": 43.30245654911107,
+            "sfid": 7.794850990561258,
+            "inception_score": 33.444068908691406,
+            "precision": 0.49022,
+            "recall": 0.6175
+          }
+        },
+        "LAP-N": {
+          "0": {
+            "fid": 42.32472437429135,
+            "sfid": 7.782111182226117,
+            "inception_score": 34.2194709777832,
+            "precision": 0.49568,
+            "recall": 0.6182
+          },
+          "1": {
+            "fid": 42.10507980414491,
+            "sfid": 7.8828056620342295,
+            "inception_score": 34.541015625,
+            "precision": 0.49388,
+            "recall": 0.6304
+          }
+        }
+      },
+      "DINOv3": {
+        "raw": {
+          "0": {
+            "fid": 42.123350035061264,
+            "sfid": 7.901089766038126,
+            "inception_score": 34.969688415527344,
+            "precision": 0.4887,
+            "recall": 0.6248
+          },
+          "1": {
+            "fid": 43.33921190125653,
+            "sfid": 7.8397918062538565,
+            "inception_score": 33.53635787963867,
+            "precision": 0.48348,
+            "recall": 0.6206
+          }
+        },
+        "LAP-L": {
+          "0": {
+            "fid": 43.22727845480648,
+            "sfid": 8.372695790413104,
+            "inception_score": 34.107627868652344,
+            "precision": 0.48146,
+            "recall": 0.6332
+          },
+          "1": {
+            "fid": 40.919668228854505,
+            "sfid": 8.07357639806878,
+            "inception_score": 35.72219467163086,
+            "precision": 0.49756,
+            "recall": 0.6336
+          }
+        }
+      },
+      "DINOv2": {
+        "raw": {
+          "0": {
+            "fid": 42.414979605966266,
+            "sfid": 8.032875482958048,
+            "inception_score": 35.1541862487793,
+            "precision": 0.48872,
+            "recall": 0.6307
+          },
+          "1": {
+            "fid": 41.7302049143986,
+            "sfid": 8.05375365912812,
+            "inception_score": 35.41808319091797,
+            "precision": 0.49566,
+            "recall": 0.6297
+          }
+        },
+        "LAP-L": {
+          "0": {
+            "fid": 40.856483852108965,
+            "sfid": 7.8492287049894,
+            "inception_score": 35.987754821777344,
+            "precision": 0.50234,
+            "recall": 0.6283
+          },
+          "1": {
+            "fid": 42.633772831543524,
+            "sfid": 8.259829604138076,
+            "inception_score": 34.348915100097656,
+            "precision": 0.48862,
+            "recall": 0.6216
+          }
+        },
+        "LAP-N": {
+          "0": {
+            "fid": 42.03248445610137,
+            "sfid": 8.250259640560898,
+            "inception_score": 35.13270568847656,
+            "precision": 0.49514,
+            "recall": 0.6257
+          },
+          "1": {
+            "fid": 42.47294536197927,
+            "sfid": 8.180916500164813,
+            "inception_score": 34.698944091796875,
+            "precision": 0.49194,
+            "recall": 0.6283
+          }
+        }
+      },
+      "Unaligned": {
+        "none": {
+          "0": {
+            "fid": 53.94549514141568,
+            "sfid": 7.7740019924077615,
+            "inception_score": 25.448123931884766,
+            "precision": 0.43674,
+            "recall": 0.5981
+          },
+          "1": {
+            "fid": 53.89893673034334,
+            "sfid": 7.842175850786816,
+            "inception_score": 25.22833824157715,
+            "precision": 0.43388,
+            "recall": 0.6068
+          }
+        }
+      }
+    }
+  },
+  "data": {
+    "MAE": {
+      "raw": {
+        "0": {
+          "100000": {
+            "fid": 87.82920893022964,
+            "sfid": 22.77964533966724,
+            "inception_score": 15.193441390991211,
+            "precision": 0.3087,
+            "recall": 0.4439,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918744",
+            "eval_job": "918745",
+            "file": "results/fid10k_mae_raw_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "200000": {
+            "fid": 69.82706623243939,
+            "sfid": 21.506449773365034,
+            "inception_score": 19.92538070678711,
+            "precision": 0.3748,
+            "recall": 0.5122,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918800",
+            "eval_job": "918801",
+            "file": "results/fid10k_mae_raw_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0005",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "300000": {
+            "fid": 61.81495804740348,
+            "sfid": 21.002169795693476,
+            "inception_score": 23.582834243774414,
+            "precision": 0.4179,
+            "recall": 0.5427,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918856",
+            "eval_job": "918857",
+            "file": "results/fid10k_mae_raw_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 56.39145494474133,
+            "sfid": 21.035376344786073,
+            "inception_score": 26.002056121826172,
+            "precision": 0.4376,
+            "recall": 0.5688,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/mae_raw/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918716",
+            "file": "results/fid10k_mae_raw_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 86.54436080300644,
+            "sfid": 22.280934877523578,
+            "inception_score": 15.294883728027344,
+            "precision": 0.3144,
+            "recall": 0.4268,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918746",
+            "eval_job": "918747",
+            "file": "results/fid10k_mae_raw_s1_0100000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0001",
+            "noise_shared_with_400k": "all samples"
+          },
+          "200000": {
+            "fid": 68.37663225963348,
+            "sfid": 21.472544995337444,
+            "inception_score": 19.927257537841797,
+            "precision": 0.3869,
+            "recall": 0.5039,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918802",
+            "eval_job": "918803",
+            "file": "results/fid10k_mae_raw_s1_0200000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0004",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 59.9262872682819,
+            "sfid": 21.063369219898505,
+            "inception_score": 23.319602966308594,
+            "precision": 0.418,
+            "recall": 0.5562,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918858",
+            "eval_job": "918859",
+            "file": "results/fid10k_mae_raw_s1_0300000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 54.68833332430074,
+            "sfid": 21.02635631794419,
+            "inception_score": 26.415536880493164,
+            "precision": 0.4441,
+            "recall": 0.569,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/mae_raw_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918717",
+            "file": "results/fid10k_mae_raw_s1_0400000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      },
+      "LAP-L": {
+        "0": {
+          "100000": {
+            "fid": 76.15679438501195,
+            "sfid": 21.88326169638765,
+            "inception_score": 17.63846206665039,
+            "precision": 0.3456,
+            "recall": 0.4727,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918748",
+            "eval_job": "918749",
+            "file": "results/fid10k_mae_res_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0004",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 60.2135383528053,
+            "sfid": 21.30825055115315,
+            "inception_score": 23.76000213623047,
+            "precision": 0.4292,
+            "recall": 0.5443,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918804",
+            "eval_job": "918805",
+            "file": "results/fid10k_mae_res_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 52.24288936327616,
+            "sfid": 20.94255558286693,
+            "inception_score": 27.831607818603516,
+            "precision": 0.4594,
+            "recall": 0.5758,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918860",
+            "eval_job": "918861",
+            "file": "results/fid10k_mae_res_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 47.946154045999776,
+            "sfid": 21.023723493563352,
+            "inception_score": 31.5310001373291,
+            "precision": 0.4747,
+            "recall": 0.6035,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/mae_res/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918718",
+            "file": "results/fid10k_mae_res_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 76.90563659019188,
+            "sfid": 21.96376804921556,
+            "inception_score": 17.28729248046875,
+            "precision": 0.3546,
+            "recall": 0.4539,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918750",
+            "eval_job": "918751",
+            "file": "results/fid10k_mae_res_s1_0100000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0004",
+            "noise_shared_with_400k": "all samples"
+          },
+          "200000": {
+            "fid": 60.46447137242012,
+            "sfid": 21.536286532212216,
+            "inception_score": 22.9693546295166,
+            "precision": 0.4129,
+            "recall": 0.5448,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918806",
+            "eval_job": "918807",
+            "file": "results/fid10k_mae_res_s1_0200000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0001",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 52.77007413569464,
+            "sfid": 20.95528525234772,
+            "inception_score": 27.950992584228516,
+            "precision": 0.4599,
+            "recall": 0.5916,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918862",
+            "eval_job": "918863",
+            "file": "results/fid10k_mae_res_s1_0300000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 48.07141234784427,
+            "sfid": 20.835927935321592,
+            "inception_score": 31.4097900390625,
+            "precision": 0.4736,
+            "recall": 0.6061,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/mae_res_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918719",
+            "file": "results/fid10k_mae_res_s1_0400000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      },
+      "LAP-N": {
+        "0": {
+          "100000": {
+            "fid": 72.90575184715306,
+            "sfid": 21.98983059535044,
+            "inception_score": 18.411090850830078,
+            "precision": 0.3739,
+            "recall": 0.4815,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918752",
+            "eval_job": "918753",
+            "file": "results/fid10k_mae_lapk5_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0001",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 56.910623187949454,
+            "sfid": 21.38250613980324,
+            "inception_score": 25.546268463134766,
+            "precision": 0.4413,
+            "recall": 0.5605,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918808",
+            "eval_job": "918809",
+            "file": "results/fid10k_mae_lapk5_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 49.516807073743564,
+            "sfid": 21.1670976052809,
+            "inception_score": 30.210811614990234,
+            "precision": 0.4765,
+            "recall": 0.5829,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918864",
+            "eval_job": "918865",
+            "file": "results/fid10k_mae_lapk5_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0016",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 45.98413391803007,
+            "sfid": 21.16651091344886,
+            "inception_score": 33.73986053466797,
+            "precision": 0.496,
+            "recall": 0.6103,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/mae_lapk5/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918720",
+            "file": "results/fid10k_mae_lapk5_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 72.63310619319913,
+            "sfid": 21.747284818611092,
+            "inception_score": 18.175830841064453,
+            "precision": 0.3725,
+            "recall": 0.4818,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918754",
+            "eval_job": "918755",
+            "file": "results/fid10k_mae_lapk5_s1_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 56.191220735613285,
+            "sfid": 21.490245932116522,
+            "inception_score": 26.0283260345459,
+            "precision": 0.4482,
+            "recall": 0.5647,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918810",
+            "eval_job": "918811",
+            "file": "results/fid10k_mae_lapk5_s1_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 48.84819478349965,
+            "sfid": 21.227591110572348,
+            "inception_score": 30.597782135009766,
+            "precision": 0.4804,
+            "recall": 0.5906,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918866",
+            "eval_job": "918867",
+            "file": "results/fid10k_mae_lapk5_s1_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 44.11973677358901,
+            "sfid": 20.92205422655593,
+            "inception_score": 34.27202224731445,
+            "precision": 0.4995,
+            "recall": 0.6195,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/mae_lapk5_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918721",
+            "file": "results/fid10k_mae_lapk5_s1_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      }
+    },
+    "AIMv2": {
+      "raw": {
+        "0": {
+          "100000": {
+            "fid": 82.41229061814528,
+            "sfid": 22.609171560216396,
+            "inception_score": 15.96945571899414,
+            "precision": 0.3348,
+            "recall": 0.4471,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918756",
+            "eval_job": "918757",
+            "file": "results/fid10k_aimv2_raw_0100000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0001",
+            "noise_shared_with_400k": "all samples"
+          },
+          "200000": {
+            "fid": 64.45626758853058,
+            "sfid": 21.534548024964693,
+            "inception_score": 21.488000869750977,
+            "precision": 0.4119,
+            "recall": 0.5083,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918812",
+            "eval_job": "918813",
+            "file": "results/fid10k_aimv2_raw_0200000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "300000": {
+            "fid": 55.97752540348506,
+            "sfid": 21.022826332273326,
+            "inception_score": 26.631511688232422,
+            "precision": 0.4476,
+            "recall": 0.5638,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918868",
+            "eval_job": "918869",
+            "file": "results/fid10k_aimv2_raw_0300000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 50.91658259774863,
+            "sfid": 21.165143701713646,
+            "inception_score": 29.759021759033203,
+            "precision": 0.4613,
+            "recall": 0.5911,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/aimv2_raw/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918722",
+            "file": "results/fid10k_aimv2_raw_0400000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 82.51942511733637,
+            "sfid": 22.86226878541106,
+            "inception_score": 16.17292022705078,
+            "precision": 0.3339,
+            "recall": 0.4088,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918758",
+            "eval_job": "918759",
+            "file": "results/fid10k_aimv2_raw_s1_0100000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0004",
+            "noise_shared_with_400k": "all samples"
+          },
+          "200000": {
+            "fid": 64.2105583617651,
+            "sfid": 21.67372841261647,
+            "inception_score": 22.273719787597656,
+            "precision": 0.4091,
+            "recall": 0.5152,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918814",
+            "eval_job": "918815",
+            "file": "results/fid10k_aimv2_raw_s1_0200000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0005",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 56.08419133035744,
+            "sfid": 21.493911733689288,
+            "inception_score": 26.438884735107422,
+            "precision": 0.4412,
+            "recall": 0.5558,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918870",
+            "eval_job": "918871",
+            "file": "results/fid10k_aimv2_raw_s1_0300000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 50.5390506719167,
+            "sfid": 21.1376350427156,
+            "inception_score": 30.044029235839844,
+            "precision": 0.4621,
+            "recall": 0.5863,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/aimv2_raw_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918723",
+            "file": "results/fid10k_aimv2_raw_s1_0400000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      },
+      "LAP-L": {
+        "0": {
+          "100000": {
+            "fid": 78.97807447971132,
+            "sfid": 22.470463473049904,
+            "inception_score": 16.933155059814453,
+            "precision": 0.3546,
+            "recall": 0.4487,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918760",
+            "eval_job": "918761",
+            "file": "results/fid10k_aimv2_lapl_0100000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "all samples"
+          },
+          "200000": {
+            "fid": 60.36001201781062,
+            "sfid": 21.710441230201354,
+            "inception_score": 23.67644691467285,
+            "precision": 0.429,
+            "recall": 0.5317,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918816",
+            "eval_job": "918817",
+            "file": "results/fid10k_aimv2_lapl_0200000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0016",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "300000": {
+            "fid": 52.537004340427245,
+            "sfid": 21.60698051787324,
+            "inception_score": 28.683128356933594,
+            "precision": 0.4643,
+            "recall": 0.5804,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918872",
+            "eval_job": "918873",
+            "file": "results/fid10k_aimv2_lapl_0300000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0016",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 46.94753659796589,
+            "sfid": 21.101732725481043,
+            "inception_score": 32.406761169433594,
+            "precision": 0.4805,
+            "recall": 0.6043,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/aimv2_lapl/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918724",
+            "file": "results/fid10k_aimv2_lapl_0400000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 77.27776879711405,
+            "sfid": 22.51455477684442,
+            "inception_score": 17.397960662841797,
+            "precision": 0.3571,
+            "recall": 0.4495,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918762",
+            "eval_job": "918763",
+            "file": "results/fid10k_aimv2_lapl_s1_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0005",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 60.19037537654219,
+            "sfid": 21.864361244186853,
+            "inception_score": 23.601577758789062,
+            "precision": 0.4278,
+            "recall": 0.5363,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918818",
+            "eval_job": "918819",
+            "file": "results/fid10k_aimv2_lapl_s1_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 52.273768648099804,
+            "sfid": 21.679983919110555,
+            "inception_score": 28.17115020751953,
+            "precision": 0.464,
+            "recall": 0.5749,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918874",
+            "eval_job": "918875",
+            "file": "results/fid10k_aimv2_lapl_s1_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 47.42351820012652,
+            "sfid": 21.373993022374407,
+            "inception_score": 32.10654067993164,
+            "precision": 0.4864,
+            "recall": 0.599,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/aimv2_lapl_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918725",
+            "file": "results/fid10k_aimv2_lapl_s1_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      }
+    },
+    "CLIP": {
+      "raw": {
+        "0": {
+          "100000": {
+            "fid": 79.33135343560394,
+            "sfid": 22.28410336745003,
+            "inception_score": 17.024314880371094,
+            "precision": 0.3468,
+            "recall": 0.453,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918764",
+            "eval_job": "918765",
+            "file": "results/fid10k_clip_raw_0100000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 60.65585085901728,
+            "sfid": 21.610674195757838,
+            "inception_score": 23.303314208984375,
+            "precision": 0.4297,
+            "recall": 0.5287,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918820",
+            "eval_job": "918821",
+            "file": "results/fid10k_clip_raw_0200000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 52.29819672303688,
+            "sfid": 21.40081786707026,
+            "inception_score": 29.111278533935547,
+            "precision": 0.4555,
+            "recall": 0.577,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918876",
+            "eval_job": "918877",
+            "file": "results/fid10k_clip_raw_0300000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 47.48682977546201,
+            "sfid": 21.378873420296145,
+            "inception_score": 32.53506851196289,
+            "precision": 0.4798,
+            "recall": 0.6065,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/clip_raw/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918726",
+            "file": "results/fid10k_clip_raw_0400000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 79.92784756806083,
+            "sfid": 22.424003472751338,
+            "inception_score": 16.929615020751953,
+            "precision": 0.347,
+            "recall": 0.4276,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918766",
+            "eval_job": "918767",
+            "file": "results/fid10k_clip_raw_s1_0100000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0004",
+            "noise_shared_with_400k": "all samples"
+          },
+          "200000": {
+            "fid": 61.22907667956156,
+            "sfid": 21.39533828617664,
+            "inception_score": 23.328975677490234,
+            "precision": 0.4226,
+            "recall": 0.5407,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918822",
+            "eval_job": "918823",
+            "file": "results/fid10k_clip_raw_s1_0200000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 52.424454517391496,
+            "sfid": 21.210881544651784,
+            "inception_score": 27.899642944335938,
+            "precision": 0.4593,
+            "recall": 0.5817,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918878",
+            "eval_job": "918879",
+            "file": "results/fid10k_clip_raw_s1_0300000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 47.36567663280039,
+            "sfid": 21.02534374867389,
+            "inception_score": 31.915802001953125,
+            "precision": 0.486,
+            "recall": 0.6043,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/clip_raw_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918727",
+            "file": "results/fid10k_clip_raw_s1_0400000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      },
+      "LAP-L": {
+        "0": {
+          "100000": {
+            "fid": 75.27810853962347,
+            "sfid": 22.766065186883566,
+            "inception_score": 17.677120208740234,
+            "precision": 0.3692,
+            "recall": 0.4576,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918768",
+            "eval_job": "918769",
+            "file": "results/fid10k_clip_res_0100000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0001",
+            "noise_shared_with_400k": "all samples"
+          },
+          "200000": {
+            "fid": 56.98321662980214,
+            "sfid": 21.7135921078019,
+            "inception_score": 25.500507354736328,
+            "precision": 0.4492,
+            "recall": 0.5515,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918824",
+            "eval_job": "918825",
+            "file": "results/fid10k_clip_res_0200000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0004",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 49.246225928793194,
+            "sfid": 21.293069325610418,
+            "inception_score": 30.817424774169922,
+            "precision": 0.4744,
+            "recall": 0.5829,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918880",
+            "eval_job": "918881",
+            "file": "results/fid10k_clip_res_0300000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0016",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 44.62770322840947,
+            "sfid": 21.195631586759305,
+            "inception_score": 34.50829315185547,
+            "precision": 0.4899,
+            "recall": 0.6209,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/clip_res/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918728",
+            "file": "results/fid10k_clip_res_0400000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 76.03081622591333,
+            "sfid": 22.53315854998482,
+            "inception_score": 17.565526962280273,
+            "precision": 0.363,
+            "recall": 0.4549,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918770",
+            "eval_job": "918771",
+            "file": "results/fid10k_clip_res_s1_0100000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "all samples"
+          },
+          "200000": {
+            "fid": 58.20925960302992,
+            "sfid": 21.73562676253175,
+            "inception_score": 24.558815002441406,
+            "precision": 0.4331,
+            "recall": 0.5538,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918826",
+            "eval_job": "918827",
+            "file": "results/fid10k_clip_res_s1_0200000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0001",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 50.859873993226245,
+            "sfid": 21.32157804274459,
+            "inception_score": 29.26984405517578,
+            "precision": 0.4672,
+            "recall": 0.5715,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918882",
+            "eval_job": "918883",
+            "file": "results/fid10k_clip_res_s1_0300000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 46.03268243274874,
+            "sfid": 21.09815358930689,
+            "inception_score": 33.466712951660156,
+            "precision": 0.4857,
+            "recall": 0.615,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/clip_res_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918729",
+            "file": "results/fid10k_clip_res_s1_0400000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      },
+      "LAP-N": {
+        "0": {
+          "100000": {
+            "fid": 75.6716585147559,
+            "sfid": 22.78195128146774,
+            "inception_score": 17.683866500854492,
+            "precision": 0.3689,
+            "recall": 0.4654,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918772",
+            "eval_job": "918773",
+            "file": "results/fid10k_clip_lapk3_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0001",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 58.21313618934818,
+            "sfid": 21.894808325737245,
+            "inception_score": 25.33991813659668,
+            "precision": 0.4323,
+            "recall": 0.5436,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918828",
+            "eval_job": "918829",
+            "file": "results/fid10k_clip_lapk3_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0016",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 50.26096834557495,
+            "sfid": 21.344303732823164,
+            "inception_score": 29.52277374267578,
+            "precision": 0.4684,
+            "recall": 0.5861,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918884",
+            "eval_job": "918885",
+            "file": "results/fid10k_clip_lapk3_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 45.25745416644861,
+            "sfid": 21.053103113486145,
+            "inception_score": 33.71422576904297,
+            "precision": 0.4989,
+            "recall": 0.6067,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/clip_lapk3/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918730",
+            "file": "results/fid10k_clip_lapk3_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 74.62931780570659,
+            "sfid": 22.026701473782055,
+            "inception_score": 17.827510833740234,
+            "precision": 0.3741,
+            "recall": 0.4667,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918774",
+            "eval_job": "918775",
+            "file": "results/fid10k_clip_lapk3_s1_0100000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "all samples"
+          },
+          "200000": {
+            "fid": 57.401712737503544,
+            "sfid": 21.49443341729352,
+            "inception_score": 24.897798538208008,
+            "precision": 0.4449,
+            "recall": 0.5455,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918830",
+            "eval_job": "918831",
+            "file": "results/fid10k_clip_lapk3_s1_0200000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0005",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 49.833926272540566,
+            "sfid": 21.57527731397056,
+            "inception_score": 30.51327133178711,
+            "precision": 0.4744,
+            "recall": 0.5877,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918886",
+            "eval_job": "918887",
+            "file": "results/fid10k_clip_lapk3_s1_0300000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 44.447533269206644,
+            "sfid": 21.142298338648175,
+            "inception_score": 34.642967224121094,
+            "precision": 0.4985,
+            "recall": 0.6257,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/clip_lapk3_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918731",
+            "file": "results/fid10k_clip_lapk3_s1_0400000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      }
+    },
+    "DINOv3": {
+      "raw": {
+        "0": {
+          "100000": {
+            "fid": 75.15942559654349,
+            "sfid": 21.8968968534424,
+            "inception_score": 17.994667053222656,
+            "precision": 0.3602,
+            "recall": 0.46,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918776",
+            "eval_job": "918777",
+            "file": "results/fid10k_dinov3_raw_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0005",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 57.967072820099986,
+            "sfid": 21.655311483614923,
+            "inception_score": 25.235294342041016,
+            "precision": 0.4346,
+            "recall": 0.5492,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918832",
+            "eval_job": "918833",
+            "file": "results/fid10k_dinov3_raw_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 49.578336879078904,
+            "sfid": 21.173891537764575,
+            "inception_score": 31.1845703125,
+            "precision": 0.4666,
+            "recall": 0.5911,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918888",
+            "eval_job": "918889",
+            "file": "results/fid10k_dinov3_raw_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 45.020079014603084,
+            "sfid": 21.18685923947851,
+            "inception_score": 35.08082580566406,
+            "precision": 0.4928,
+            "recall": 0.6215,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/dinov3_raw/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918732",
+            "file": "results/fid10k_dinov3_raw_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 77.60873932947624,
+            "sfid": 22.55902570161504,
+            "inception_score": 17.281814575195312,
+            "precision": 0.3594,
+            "recall": 0.4374,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918778",
+            "eval_job": "918779",
+            "file": "results/fid10k_dinov3_raw_s1_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0004",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 58.77747607095631,
+            "sfid": 21.735919759714307,
+            "inception_score": 24.41484832763672,
+            "precision": 0.4383,
+            "recall": 0.544,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918834",
+            "eval_job": "918835",
+            "file": "results/fid10k_dinov3_raw_s1_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 50.382572983644366,
+            "sfid": 21.476902547809004,
+            "inception_score": 29.968271255493164,
+            "precision": 0.4603,
+            "recall": 0.5855,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918890",
+            "eval_job": "918891",
+            "file": "results/fid10k_dinov3_raw_s1_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 46.38207882633196,
+            "sfid": 21.17445649495471,
+            "inception_score": 34.17390441894531,
+            "precision": 0.478,
+            "recall": 0.616,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/dinov3_raw_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918733",
+            "file": "results/fid10k_dinov3_raw_s1_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      },
+      "LAP-L": {
+        "0": {
+          "100000": {
+            "fid": 76.87932058566236,
+            "sfid": 22.735060755033828,
+            "inception_score": 17.911666870117188,
+            "precision": 0.3593,
+            "recall": 0.4606,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918780",
+            "eval_job": "918781",
+            "file": "results/fid10k_dinov3_lapl_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 58.90236154274396,
+            "sfid": 21.95651774608791,
+            "inception_score": 24.757394790649414,
+            "precision": 0.4363,
+            "recall": 0.5399,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918836",
+            "eval_job": "918837",
+            "file": "results/fid10k_dinov3_lapl_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 50.508651443868985,
+            "sfid": 21.620067908044916,
+            "inception_score": 30.451519012451172,
+            "precision": 0.4727,
+            "recall": 0.5894,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918892",
+            "eval_job": "918893",
+            "file": "results/fid10k_dinov3_lapl_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0004",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 46.034049528471314,
+            "sfid": 21.796563639509145,
+            "inception_score": 33.849761962890625,
+            "precision": 0.4867,
+            "recall": 0.6245,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/dinov3_lapl/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918734",
+            "file": "results/fid10k_dinov3_lapl_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 72.60092939126298,
+            "sfid": 22.339367105656947,
+            "inception_score": 18.729766845703125,
+            "precision": 0.3725,
+            "recall": 0.4691,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918782",
+            "eval_job": "918783",
+            "file": "results/fid10k_dinov3_lapl_s1_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0005",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 56.43713442467913,
+            "sfid": 22.106860306018348,
+            "inception_score": 26.1171875,
+            "precision": 0.4442,
+            "recall": 0.54,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918838",
+            "eval_job": "918839",
+            "file": "results/fid10k_dinov3_lapl_s1_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 48.196779310241595,
+            "sfid": 21.573907111388962,
+            "inception_score": 31.720277786254883,
+            "precision": 0.4847,
+            "recall": 0.5946,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918894",
+            "eval_job": "918895",
+            "file": "results/fid10k_dinov3_lapl_s1_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 43.66802294044953,
+            "sfid": 21.327610331090682,
+            "inception_score": 35.94364929199219,
+            "precision": 0.493,
+            "recall": 0.6309,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/dinov3_lapl_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918735",
+            "file": "results/fid10k_dinov3_lapl_s1_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      }
+    },
+    "DINOv2": {
+      "raw": {
+        "0": {
+          "100000": {
+            "fid": 75.3214910718873,
+            "sfid": 22.4669135444542,
+            "inception_score": 17.91645050048828,
+            "precision": 0.3719,
+            "recall": 0.4596,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918784",
+            "eval_job": "918785",
+            "file": "results/fid10k_repa_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0004",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 58.159755439095306,
+            "sfid": 21.91340110535168,
+            "inception_score": 24.942333221435547,
+            "precision": 0.4471,
+            "recall": 0.5462,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918840",
+            "eval_job": "918841",
+            "file": "results/fid10k_repa_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0016",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 49.40588892951672,
+            "sfid": 21.72520793672618,
+            "inception_score": 29.980159759521484,
+            "precision": 0.4702,
+            "recall": 0.5995,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918896",
+            "eval_job": "918897",
+            "file": "results/fid10k_repa_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0005",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 45.492065239088674,
+            "sfid": 21.42308555582133,
+            "inception_score": 35.118263244628906,
+            "precision": 0.4889,
+            "recall": 0.6189,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/repa/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918736",
+            "file": "results/fid10k_repa_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 74.73646382985925,
+            "sfid": 22.446579029831582,
+            "inception_score": 18.29989242553711,
+            "precision": 0.3676,
+            "recall": 0.4629,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918786",
+            "eval_job": "918787",
+            "file": "results/fid10k_repa_s1_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0001",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 57.63615602236865,
+            "sfid": 22.115006495426314,
+            "inception_score": 25.705617904663086,
+            "precision": 0.4362,
+            "recall": 0.5529,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918842",
+            "eval_job": "918843",
+            "file": "results/fid10k_repa_s1_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 48.94991922587258,
+            "sfid": 21.35962533847055,
+            "inception_score": 31.886899948120117,
+            "precision": 0.4776,
+            "recall": 0.6035,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918898",
+            "eval_job": "918899",
+            "file": "results/fid10k_repa_s1_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 44.60903231743191,
+            "sfid": 21.372293033505912,
+            "inception_score": 35.720088958740234,
+            "precision": 0.4948,
+            "recall": 0.6295,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/repa_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918737",
+            "file": "results/fid10k_repa_s1_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      },
+      "LAP-L": {
+        "0": {
+          "100000": {
+            "fid": 74.37647784093531,
+            "sfid": 22.615466429440062,
+            "inception_score": 18.175228118896484,
+            "precision": 0.3675,
+            "recall": 0.4618,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918788",
+            "eval_job": "918789",
+            "file": "results/fid10k_aa_res_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 56.56997592642574,
+            "sfid": 21.74753025251755,
+            "inception_score": 26.088768005371094,
+            "precision": 0.4476,
+            "recall": 0.5481,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918844",
+            "eval_job": "918845",
+            "file": "results/fid10k_aa_res_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 48.161457716654354,
+            "sfid": 21.499320239048302,
+            "inception_score": 32.018470764160156,
+            "precision": 0.4816,
+            "recall": 0.5946,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918900",
+            "eval_job": "918901",
+            "file": "results/fid10k_aa_res_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 44.142986239951085,
+            "sfid": 21.225667817305293,
+            "inception_score": 36.02573013305664,
+            "precision": 0.501,
+            "recall": 0.6195,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/aa_res/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918738",
+            "file": "results/fid10k_aa_res_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 76.12361272504353,
+            "sfid": 22.746042863940602,
+            "inception_score": 18.139366149902344,
+            "precision": 0.3616,
+            "recall": 0.458,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918790",
+            "eval_job": "918791",
+            "file": "results/fid10k_aa_res_s1_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0001",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 58.686333443067724,
+            "sfid": 22.054469461715144,
+            "inception_score": 25.172718048095703,
+            "precision": 0.4375,
+            "recall": 0.5473,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918846",
+            "eval_job": "918847",
+            "file": "results/fid10k_aa_res_s1_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 50.23266197899659,
+            "sfid": 21.808206056240124,
+            "inception_score": 30.333555221557617,
+            "precision": 0.4654,
+            "recall": 0.5985,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918902",
+            "eval_job": "918903",
+            "file": "results/fid10k_aa_res_s1_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0004",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 45.49059386105074,
+            "sfid": 21.687393405551347,
+            "inception_score": 34.59598159790039,
+            "precision": 0.4904,
+            "recall": 0.6232,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/aa_res_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918739",
+            "file": "results/fid10k_aa_res_s1_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      },
+      "LAP-N": {
+        "0": {
+          "100000": {
+            "fid": 76.07758130987293,
+            "sfid": 22.57877713769267,
+            "inception_score": 18.052345275878906,
+            "precision": 0.3664,
+            "recall": 0.4687,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918796",
+            "eval_job": "918797",
+            "file": "results/fid10k_lapk3_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0004",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 57.491336740302586,
+            "sfid": 22.172391385618994,
+            "inception_score": 25.5322208404541,
+            "precision": 0.4454,
+            "recall": 0.547,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918852",
+            "eval_job": "918853",
+            "file": "results/fid10k_lapk3_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 49.805954817594795,
+            "sfid": 21.99552743465233,
+            "inception_score": 31.101726531982422,
+            "precision": 0.4729,
+            "recall": 0.597,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918908",
+            "eval_job": "918909",
+            "file": "results/fid10k_lapk3_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0020",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 44.7767871972992,
+            "sfid": 21.656204411635258,
+            "inception_score": 35.74082946777344,
+            "precision": 0.4945,
+            "recall": 0.6236,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/lapk3/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918742",
+            "file": "results/fid10k_lapk3_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 77.1516377089639,
+            "sfid": 22.583145212721092,
+            "inception_score": 17.760242462158203,
+            "precision": 0.3543,
+            "recall": 0.4579,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918798",
+            "eval_job": "918799",
+            "file": "results/fid10k_lapk3_s1_0100000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0005",
+            "noise_shared_with_400k": "all samples"
+          },
+          "200000": {
+            "fid": 59.164621217600086,
+            "sfid": 22.30407583086037,
+            "inception_score": 24.901243209838867,
+            "precision": 0.4346,
+            "recall": 0.5474,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918854",
+            "eval_job": "918855",
+            "file": "results/fid10k_lapk3_s1_0200000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "a100",
+            "node": "c0017",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "300000": {
+            "fid": 50.266117164548234,
+            "sfid": 21.844319801350707,
+            "inception_score": 30.640045166015625,
+            "precision": 0.473,
+            "recall": 0.5925,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918910",
+            "eval_job": "918911",
+            "file": "results/fid10k_lapk3_s1_0300000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 45.25926388462028,
+            "sfid": 21.480668481515636,
+            "inception_score": 34.723121643066406,
+            "precision": 0.5003,
+            "recall": 0.612,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/lapk3_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918743",
+            "file": "results/fid10k_lapk3_s1_0400000.json",
+            "gpu_400k_draw": "h100",
+            "gpu": "h100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      }
+    },
+    "Unaligned": {
+      "none": {
+        "0": {
+          "100000": {
+            "fid": 88.04005261270777,
+            "sfid": 22.74457647483905,
+            "inception_score": 14.80185317993164,
+            "precision": 0.3149,
+            "recall": 0.4446,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918792",
+            "eval_job": "918793",
+            "file": "results/fid10k_vanilla_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 69.68924468410245,
+            "sfid": 21.40574697984755,
+            "inception_score": 19.748933792114258,
+            "precision": 0.387,
+            "recall": 0.4945,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918848",
+            "eval_job": "918849",
+            "file": "results/fid10k_vanilla_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0021",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 61.29484707710287,
+            "sfid": 21.216552976932007,
+            "inception_score": 22.679716110229492,
+            "precision": 0.419,
+            "recall": 0.5421,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918904",
+            "eval_job": "918905",
+            "file": "results/fid10k_vanilla_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0001",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "400000": {
+            "fid": 56.42392092784701,
+            "sfid": 21.093391857301526,
+            "inception_score": 25.55121612548828,
+            "precision": 0.4402,
+            "recall": 0.5548,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/vanilla/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918740",
+            "file": "results/fid10k_vanilla_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        },
+        "1": {
+          "100000": {
+            "fid": 88.88997622890781,
+            "sfid": 22.7374197442158,
+            "inception_score": 14.602239608764648,
+            "precision": 0.3099,
+            "recall": 0.4361,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918794",
+            "eval_job": "918795",
+            "file": "results/fid10k_vanilla_s1_0100000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "h100",
+            "node": "c0002",
+            "noise_shared_with_400k": "batch positions 0-53 of every 64 (84%)"
+          },
+          "200000": {
+            "fid": 71.89903560699639,
+            "sfid": 21.999836523237263,
+            "inception_score": 19.13283920288086,
+            "precision": 0.3746,
+            "recall": 0.4891,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918850",
+            "eval_job": "918851",
+            "file": "results/fid10k_vanilla_s1_0200000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0016",
+            "noise_shared_with_400k": "all samples"
+          },
+          "300000": {
+            "fid": 62.73061999909589,
+            "sfid": 21.438754482011745,
+            "inception_score": 22.548206329345703,
+            "precision": 0.4088,
+            "recall": 0.5255,
+            "n_samples": 10000,
+            "source": "gen50k.sbatch NS=10000",
+            "genjob": "918906",
+            "eval_job": "918907",
+            "file": "results/fid10k_vanilla_s1_0300000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "node": "c0016",
+            "noise_shared_with_400k": "all samples"
+          },
+          "400000": {
+            "fid": 56.78867995237135,
+            "sfid": 21.119755845920736,
+            "inception_score": 25.2470645904541,
+            "precision": 0.4339,
+            "recall": 0.5668,
+            "n_samples": 10000,
+            "source": "first 10000 of samples50k/vanilla_s1/SiT-B-2-0400000-size-256-vae-mse-cfg-1.0-seed-0-sde.npz",
+            "genjob": "original50k",
+            "eval_job": "918741",
+            "file": "results/fid10k_vanilla_s1_0400000.json",
+            "gpu_400k_draw": "a100",
+            "gpu": "a100",
+            "noise_shared_with_400k": "all samples (same draw)"
+          }
+        }
+      }
+    }
+  }
+}

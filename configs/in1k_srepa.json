@@ -1,0 +1,6 @@
+{
+  "model": "SiT-B/2",
+  "proj_coeff": 1.0,
+  "struc_coeff": 2.0,
+  "checkpointing_steps": 100000
+}

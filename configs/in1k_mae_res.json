@@ -1,0 +1,6 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "mae-vit-l",
+  "target_mode": "residual",
+  "checkpointing_steps": 100000
+}

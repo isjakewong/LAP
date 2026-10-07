@@ -1,0 +1,6 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "mae-vit-l",
+  "reg_cls_beta": 0.03,
+  "checkpointing_steps": 100000
+}

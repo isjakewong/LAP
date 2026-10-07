@@ -1,0 +1,6 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "dinov3-vit-l",
+  "target_mode": "residual",
+  "checkpointing_steps": 25000
+}

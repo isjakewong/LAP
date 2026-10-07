@@ -1,0 +1,8 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "mae-vit-l",
+  "vae_path": "REPA-E/e2e-sdvae-hf",
+  "latents_stats": "assets/e2e-sdvae-400k-latents-stats.pt",
+  "vae_encode_online": true,
+  "checkpointing_steps": 25000
+}

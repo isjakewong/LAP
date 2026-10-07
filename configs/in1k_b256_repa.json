@@ -1,0 +1,5 @@
+{
+  "model": "SiT-B/2",
+  "gradient_accumulation_steps": 4,
+  "checkpointing_steps": 25000
+}

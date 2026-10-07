@@ -1,0 +1,7 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "aimv2-vit-l",
+  "target_mode": "purified",
+  "purifier_ckpt": "assets/purifier1k_aimv2_k5.pt",
+  "checkpointing_steps": 100000
+}

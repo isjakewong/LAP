@@ -1,0 +1,6 @@
+{
+  "model": "SiT-B/2",
+  "encoder_depth": 4,
+  "enc_type": "clip-vit-L",
+  "checkpointing_steps": 25000
+}

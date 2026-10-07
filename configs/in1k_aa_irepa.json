@@ -1,0 +1,6 @@
+{
+  "model": "SiT-B/2",
+  "conv_projector": true,
+  "spatial_norm": true,
+  "checkpointing_steps": 100000
+}

@@ -1,0 +1,10 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "mae-vit-l",
+  "vae_path": "zelaki/eq-vae",
+  "latents_stats": "assets/eqvae-latents-stats.pt",
+  "vae_encode_online": true,
+  "target_mode": "purified",
+  "purifier_ckpt": "assets/purifier1k_eqvae_mae_k5.pt",
+  "checkpointing_steps": 25000
+}

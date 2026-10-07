@@ -1,0 +1,539 @@
+{
+  "source": "Values behind the paper's figures and tables. Main diagnostics are in image_disjoint_probes.json; development diagnostics use the earlier token-split protocol.",
+  "convention": "FID and proxy arrays are individual training seeds. Diagnostic means and single-checkpoint values are scoped separately. Empty arrays mean not evaluated.",
+  "full": {
+    "unaligned": {
+      "fid": [
+        53.94549514141568,
+        53.89893673034334
+      ],
+      "sfid": 7.81,
+      "IS": 25.34,
+      "precision": 0.435,
+      "recall": 0.602
+    },
+    "mae_raw": {
+      "fid": [
+        53.684592207074274,
+        52.411476887925005
+      ],
+      "sfid": 7.78,
+      "IS": 26.3,
+      "precision": 0.438,
+      "recall": 0.599
+    },
+    "repa": {
+      "fid": [
+        42.14203526321796,
+        41.34898858593294
+      ],
+      "sfid": 8.008745816954956,
+      "IS": 35.499650955200195,
+      "precision": 0.49182000000000003,
+      "recall": 0.63015
+    },
+    "dino_linear": {
+      "fid": [
+        40.611728518525354,
+        42.3273459389618
+      ],
+      "sfid": 7.997498570581058,
+      "IS": 35.530330657958984,
+      "precision": 0.49478,
+      "recall": 0.621
+    },
+    "dino_lap": {
+      "fid": [
+        41.896581089283416,
+        42.32729775766143
+      ],
+      "sfid": 8.197995510830367,
+      "IS": 35.26070785522461,
+      "precision": 0.49301,
+      "recall": 0.6324000000000001
+    },
+    "mae_linear": {
+      "fid": [
+        44.80759079601307,
+        45.48273011793941
+      ],
+      "sfid": 7.66,
+      "IS": 31.44,
+      "precision": 0.48,
+      "recall": 0.617
+    },
+    "mae_lap": {
+      "fid": [
+        43.05549449665375,
+        41.53489250916539
+      ],
+      "sfid": 7.7,
+      "IS": 33.85,
+      "precision": 0.496,
+      "recall": 0.622
+    },
+    "prediction_loss": {
+      "fid": [
+        46.67436999573226,
+        46.898470290931414
+      ],
+      "sfid": 7.49,
+      "IS": 29.99,
+      "precision": 0.473,
+      "recall": 0.617
+    },
+    "dino_predicted": {
+      "fid": [
+        57.00318657045284,
+        56.416275321797116
+      ],
+      "sfid": 8.08,
+      "IS": 24.37,
+      "precision": 0.415,
+      "recall": 0.591
+    }
+  },
+  "forcing": [
+    {
+      "scale": "dev",
+      "weight": 0,
+      "sufficiency": 0.16,
+      "use": 8.3,
+      "cosine": 0.65,
+      "proxy": [
+        1157.3,
+        1161.2
+      ],
+      "diagnostic_protocol": "Earlier token-split diagnostic, mid-noise, two training seeds."
+    },
+    {
+      "scale": "dev",
+      "weight": 0.5,
+      "sufficiency": 0.5,
+      "use": 7.6,
+      "cosine": 0.63,
+      "proxy": [
+        1167.2,
+        1207.1
+      ],
+      "diagnostic_protocol": "Earlier token-split diagnostic, mid-noise, two training seeds."
+    },
+    {
+      "scale": "dev",
+      "weight": 2,
+      "sufficiency": 0.52,
+      "use": 40.2,
+      "cosine": 0.61,
+      "proxy": [
+        1242.0,
+        1252.3
+      ],
+      "diagnostic_protocol": "Earlier token-split diagnostic, mid-noise, two training seeds."
+    },
+    {
+      "scale": "full",
+      "weight": 0,
+      "sufficiency": 0.1133621017124058,
+      "use": 11.4228495942887,
+      "cosine": 0.6371757090091705,
+      "proxy": [
+        825.1,
+        821.1
+      ],
+      "diagnostic_protocol": "Image-disjoint, mid-noise, two training seeds."
+    },
+    {
+      "scale": "full",
+      "weight": 2,
+      "sufficiency": 0.5334622020520425,
+      "use": 15.187237730061387,
+      "cosine": 0.6121318638324738,
+      "proxy": [
+        879.5,
+        877.1
+      ],
+      "diagnostic_protocol": "Image-disjoint, mid-noise, two training seeds."
+    }
+  ],
+  "encoders": [
+    {
+      "name": "CLIP",
+      "utility": 0.18,
+      "proxy": [
+        1548.9,
+        1553.0
+      ]
+    },
+    {
+      "name": "I-JEPA",
+      "utility": 0.29,
+      "proxy": [
+        1529.4,
+        1515.7
+      ]
+    },
+    {
+      "name": "DINOv2",
+      "utility": 0.33,
+      "proxy": [
+        1551.2,
+        1518.6
+      ]
+    },
+    {
+      "name": "MoCo v3",
+      "utility": 0.44,
+      "proxy": [
+        1584.2,
+        1598.0
+      ]
+    },
+    {
+      "name": "MAE",
+      "utility": 0.72,
+      "proxy": [
+        1641.4,
+        1643.2
+      ]
+    }
+  ],
+  "ladder": {
+    "unaligned": {
+      "dev": [
+        1652.4,
+        1649.9
+      ],
+      "full": [
+        945.7,
+        947.4
+      ]
+    },
+    "mae_raw": {
+      "dev": [
+        1641.4,
+        1643.2
+      ],
+      "full": [
+        946.2,
+        933.9
+      ]
+    },
+    "mae_centered": {
+      "dev": [
+        1544.0,
+        1552.6
+      ],
+      "full": []
+    },
+    "mae_linear": {
+      "dev": [
+        1504.3,
+        1512.3
+      ],
+      "full": [
+        837.7,
+        856.5
+      ]
+    },
+    "mae_lap": {
+      "dev": [
+        1486.2,
+        1482.6
+      ],
+      "full": [
+        821.3,
+        797.6
+      ]
+    },
+    "mae_composed": {
+      "dev": [
+        1512.2,
+        1468.6
+      ],
+      "full": []
+    },
+    "repa": {
+      "dev": [
+        1551.2,
+        1518.6
+      ],
+      "full": [
+        825.1,
+        821.1
+      ]
+    },
+    "dino_linear": {
+      "dev": [
+        1546.0,
+        1487.8
+      ],
+      "full": [
+        804.8,
+        827.8
+      ]
+    },
+    "dino_lap": {
+      "dev": [
+        1508.4,
+        1536.2
+      ],
+      "full": [
+        821.7,
+        833.4
+      ]
+    }
+  },
+  "split": {
+    "repa": {
+      "dev": [
+        1551.2,
+        1518.6
+      ],
+      "full": [
+        825.1,
+        821.1
+      ]
+    },
+    "dino_linear": {
+      "dev": [
+        1546.0,
+        1487.8
+      ],
+      "full": [
+        804.8,
+        827.8
+      ]
+    },
+    "dino_predicted": {
+      "dev": [
+        1679.9,
+        1641.6
+      ],
+      "full": [
+        1000.6,
+        995.2
+      ]
+    }
+  },
+  "curves": {
+    "unaligned": [
+      1257.8,
+      1078.9,
+      997.0,
+      945.7
+    ],
+    "mae_raw": [
+      1258.7,
+      1077.3,
+      998.6,
+      933.9
+    ],
+    "repa_0": [
+      1169.6,
+      978.3,
+      894.4,
+      825.1
+    ],
+    "repa_1": [
+      1160.4,
+      973.0,
+      872.9,
+      821.1
+    ],
+    "dino_linear_0": [
+      1157.3,
+      963.0,
+      869.8,
+      804.8
+    ],
+    "dino_linear_1": [
+      1180.6,
+      987.5,
+      893.4,
+      827.8
+    ],
+    "dino_lap_0": [
+      1168.2,
+      984.3,
+      890.2,
+      821.7
+    ],
+    "dino_lap_1": [
+      1191.8,
+      992.8,
+      908.6,
+      833.4
+    ],
+    "mae_linear_0": [
+      1159.4,
+      998.9,
+      906.0,
+      837.7
+    ],
+    "mae_linear_1": [
+      1164.6,
+      999.8,
+      910.5,
+      856.5
+    ],
+    "mae_lap_0": [
+      1135.1,
+      956.2,
+      879.7,
+      821.3
+    ],
+    "mae_lap_1": [
+      1127.6,
+      941.2,
+      865.1,
+      797.6
+    ]
+  },
+  "regime": {
+    "unaligned": [
+      1651.2,
+      1456.8,
+      1477.9,
+      746.7,
+      36.38,
+      740.9,
+      38.44,
+      488.4,
+      20.33,
+      27.61
+    ],
+    "mae_raw": [
+      1642.3,
+      1421.5,
+      1466.6,
+      718.3,
+      34.46,
+      678.1,
+      33.97,
+      410.8,
+      15.39,
+      26.83
+    ],
+    "repa": [
+      1534.9,
+      1226.7,
+      1174.6,
+      623.7,
+      27.96,
+      472.6,
+      19.09,
+      305.6,
+      9.64,
+      18.02
+    ],
+    "mae_lap": [
+      1484.4,
+      1228.9,
+      1215.0,
+      630.3,
+      28.98,
+      520.2,
+      24.09,
+      334.5,
+      12.06,
+      18.27
+    ]
+  },
+  "inside": {
+    "seed": 0,
+    "noise": "mid",
+    "rank": 256,
+    "decodability": {
+      "unaligned": 0.12966705326739936,
+      "mae_linear": 0.17226823421224946,
+      "mae_lap": 0.1784224861533682,
+      "repa": 0.2073535221274284
+    },
+    "dino_ladder": {
+      "presence": [
+        0.2073535221274284,
+        0.21297974174306877,
+        0.2132366394218732
+      ],
+      "sufficiency": [
+        0.11458836655408489,
+        -0.015890543065315788,
+        -0.0661997828859977
+      ],
+      "use": [
+        12.20849929163291,
+        6.669774010223004,
+        4.181765703169705
+      ],
+      "presence_ci95": [
+        [
+          0.19843994248520536,
+          0.2141350984394316
+        ],
+        [
+          0.20416388351423106,
+          0.21971031754788378
+        ],
+        [
+          0.20408569422240613,
+          0.22033901759282593
+        ]
+      ],
+      "sufficiency_ci95": [
+        [
+          0.09850412198703101,
+          0.12940581273438956
+        ],
+        [
+          -0.03017679510691378,
+          -0.0031881566750505343
+        ],
+        [
+          -0.08909204877551145,
+          -0.047683381729268774
+        ]
+      ],
+      "use_ci95": [
+        [
+          11.494506781651607,
+          12.909668183312359
+        ],
+        [
+          6.2133602505370344,
+          7.137933928380007
+        ],
+        [
+          3.8815929658556128,
+          4.496414218708063
+        ]
+      ]
+    },
+    "protocol": "Image-disjoint, 1024 fit / 256 evaluation images, shared images/posterior/noise/times, 80 tokens/image. Source: image_disjoint_probes.json.",
+    "display": "Absolute probe R2, including negative values; use as percent of full-layer ablation. Intervals bootstrap evaluation images conditional on fitted probes.",
+    "decodability_ci95": {
+      "unaligned": [
+        0.12329911412251039,
+        0.13381737289976467
+      ],
+      "mae_linear": [
+        0.1647114274942903,
+        0.17767135226845293
+      ],
+      "mae_lap": [
+        0.17045193171011805,
+        0.18411395336819905
+      ],
+      "repa": [
+        0.19843994248520536,
+        0.2141350984394316
+      ]
+    }
+  },
+  "fid_precision_note": "Base DINOv2 raw/LAP-L/LAP-N standard metrics use a matched 50K re-evaluation; other results keep their original draws. FID arrays keep full precision.",
+  "method_labels": {
+    "mae_linear": "LAP-L (MAE)",
+    "mae_lap": "LAP-N (MAE)",
+    "dino_linear": "LAP-L (DINOv2)",
+    "dino_lap": "LAP-N (DINOv2)"
+  }
+}

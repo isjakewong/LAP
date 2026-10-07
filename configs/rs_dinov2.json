@@ -1,0 +1,5 @@
+{
+  "model": "SiT-B/2",
+  "data_dir": "data/resisc45_256",
+  "max_train_steps": 50000
+}

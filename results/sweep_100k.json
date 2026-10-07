@@ -1,0 +1,190 @@
+{
+  "meta": {
+    "protocol": "ImageNet-1k, SiT-B/2, batch 64, 100K steps, block-8 alignment, lambda 0.5; Inception FID-10K (ADM evaluator, ImageNet-256 reference batch, SDE-250, no CFG, EMA). C_0 on dev-200 (2,048 images, batchwise targets). Table-1 teachers evaluated at their 100K checkpoints; the eight sweep encoders were specified before training.",
+    "anchor": "in Table 1 of the paper"
+  },
+  "encoders": [
+    {
+      "name": "MAE-L",
+      "anchor": true,
+      "c0_raw": 0.933,
+      "c0_lapl": 0.02,
+      "raw": [
+        87.83,
+        86.54
+      ],
+      "lapl": [
+        76.16,
+        76.91
+      ]
+    },
+    {
+      "name": "AIMv2-L",
+      "anchor": true,
+      "c0_raw": 0.663,
+      "c0_lapl": 0.041,
+      "raw": [
+        82.41,
+        82.52
+      ],
+      "lapl": [
+        78.98,
+        77.28
+      ]
+    },
+    {
+      "name": "CLIP-L",
+      "anchor": true,
+      "c0_raw": 0.607,
+      "c0_lapl": 0.088,
+      "raw": [
+        79.33,
+        79.93
+      ],
+      "lapl": [
+        75.28,
+        76.03
+      ]
+    },
+    {
+      "name": "DINOv3-B",
+      "anchor": true,
+      "c0_raw": 0.525,
+      "c0_lapl": 0.018,
+      "raw": [
+        75.16,
+        77.61
+      ],
+      "lapl": [
+        76.88,
+        72.6
+      ]
+    },
+    {
+      "name": "DINOv2-B",
+      "anchor": true,
+      "c0_raw": 0.221,
+      "c0_lapl": 0.007,
+      "raw": [
+        75.32,
+        74.74
+      ],
+      "lapl": [
+        74.38,
+        76.12
+      ]
+    },
+    {
+      "name": "MAE-B",
+      "anchor": false,
+      "c0_raw": 0.938,
+      "c0_lapl": 0.022,
+      "raw": [
+        87.56,
+        86.32
+      ],
+      "lapl": [
+        75.53,
+        75.42
+      ]
+    },
+    {
+      "name": "CLIP-B/16",
+      "anchor": false,
+      "c0_raw": 0.704,
+      "c0_lapl": 0.246,
+      "raw": [
+        83.5,
+        83.41
+      ],
+      "lapl": [
+        78.4,
+        79.44
+      ]
+    },
+    {
+      "name": "DINOv3-H+",
+      "anchor": false,
+      "c0_raw": 0.682,
+      "c0_lapl": 0.033,
+      "raw": [
+        80.58,
+        80.36
+      ],
+      "lapl": [
+        76.45,
+        78.08
+      ]
+    },
+    {
+      "name": "PE-Spatial-B",
+      "anchor": false,
+      "c0_raw": 0.575,
+      "c0_lapl": 0.017,
+      "raw": [
+        76.55,
+        77.03
+      ],
+      "lapl": [
+        75.07,
+        75.19
+      ]
+    },
+    {
+      "name": "DINOv3-L",
+      "anchor": false,
+      "c0_raw": 0.476,
+      "c0_lapl": 0.028,
+      "raw": [
+        76.02,
+        76.57
+      ],
+      "lapl": [
+        76.01,
+        75.24
+      ]
+    },
+    {
+      "name": "PE-Core-L",
+      "anchor": false,
+      "c0_raw": 0.403,
+      "c0_lapl": 0.03,
+      "raw": [
+        83.34,
+        80.71
+      ],
+      "lapl": [
+        81.66,
+        82.39
+      ]
+    },
+    {
+      "name": "DINOv2-L",
+      "anchor": false,
+      "c0_raw": 0.254,
+      "c0_lapl": 0.009,
+      "raw": [
+        76.7,
+        75.4
+      ],
+      "lapl": [
+        73.98,
+        75.01
+      ]
+    },
+    {
+      "name": "DINOv2-S",
+      "anchor": false,
+      "c0_raw": 0.244,
+      "c0_lapl": 0.009,
+      "raw": [
+        74.53,
+        75.12
+      ],
+      "lapl": [
+        73.99,
+        74.3
+      ]
+    }
+  ]
+}

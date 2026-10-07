@@ -1,0 +1,7 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "mae-vit-l",
+  "proj_coeff": 1.0,
+  "struc_coeff": 2.0,
+  "checkpointing_steps": 100000
+}

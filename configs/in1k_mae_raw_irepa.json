@@ -1,0 +1,7 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "mae-vit-l",
+  "conv_projector": true,
+  "spatial_norm": true,
+  "checkpointing_steps": 100000
+}

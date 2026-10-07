@@ -1,0 +1,7 @@
+{
+  "model": "SiT-B/2",
+  "data_dir": "data/in256_dev200",
+  "sufficiency": true,
+  "lambda_s": 0.1,
+  "max_train_steps": 50000
+}

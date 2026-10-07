@@ -1,0 +1,7 @@
+{
+  "model": "SiT-B/2",
+  "data_dir": "data/in256_dev200",
+  "enc_type": "jepa-vit-h",
+  "checkpointing_steps": 25000,
+  "max_train_steps": 50000
+}

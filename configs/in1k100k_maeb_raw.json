@@ -1,0 +1,5 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "mae-vit-b",
+  "checkpointing_steps": 25000
+}

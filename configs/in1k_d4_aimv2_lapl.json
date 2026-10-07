@@ -1,0 +1,7 @@
+{
+  "model": "SiT-B/2",
+  "encoder_depth": 4,
+  "enc_type": "aimv2-vit-l",
+  "target_mode": "residual",
+  "checkpointing_steps": 25000
+}

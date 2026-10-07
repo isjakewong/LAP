@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: Please cite the accompanying paper if you use this code.
+title: 'Purify Before You Align: Improving Representation Alignment for Diffusion Models'
+type: software
+repository-code: 'https://github.com/isjakewong/LAP'
+authors:
+  - family-names: Wang
+    given-names: Yingheng
+  - family-names: Li
+    given-names: Yaoqiang
+  - family-names: Wu
+    given-names: Yaqin
+  - family-names: Bai
+    given-names: Junwen
+  - family-names: Gu
+    given-names: Jiatao
+  - family-names: De Sa
+    given-names: Christopher
+  - family-names: Kuleshov
+    given-names: Volodymyr

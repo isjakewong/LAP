@@ -1,0 +1,6 @@
+{
+  "model": "SiT-B/2",
+  "data_dir": "data/aid_256",
+  "enc_type": "mae-vit-l",
+  "max_train_steps": 50000
+}

@@ -1,0 +1,190 @@
+{
+  "meta": {
+    "protocol": "ImageNet-1k, SiT-B/2, batch 64, 400K steps, block-8 alignment, lambda 0.5; FID-50K (ADM evaluator, SDE-250, no CFG, EMA). Table-1 teachers use their 400K runs; the sweep encoders were continued from their 100K checkpoints to 400K.",
+    "anchor": "in Table 1 of the paper"
+  },
+  "encoders": [
+    {
+      "name": "MAE-L",
+      "anchor": true,
+      "c0_raw": 0.933,
+      "c0_lapl": 0.02,
+      "raw": [
+        53.68,
+        52.41
+      ],
+      "lapl": [
+        44.81,
+        45.48
+      ]
+    },
+    {
+      "name": "AIMv2-L",
+      "anchor": true,
+      "c0_raw": 0.663,
+      "c0_lapl": 0.041,
+      "raw": [
+        48.08,
+        47.87
+      ],
+      "lapl": [
+        44.4,
+        44.22
+      ]
+    },
+    {
+      "name": "CLIP-L",
+      "anchor": true,
+      "c0_raw": 0.607,
+      "c0_lapl": 0.088,
+      "raw": [
+        44.73,
+        44.74
+      ],
+      "lapl": [
+        42.08,
+        43.3
+      ]
+    },
+    {
+      "name": "DINOv3-B",
+      "anchor": true,
+      "c0_raw": 0.525,
+      "c0_lapl": 0.018,
+      "raw": [
+        42.12,
+        43.34
+      ],
+      "lapl": [
+        43.23,
+        40.92
+      ]
+    },
+    {
+      "name": "DINOv2-B",
+      "anchor": true,
+      "c0_raw": 0.221,
+      "c0_lapl": 0.007,
+      "raw": [
+        42.14,
+        41.35
+      ],
+      "lapl": [
+        40.61,
+        42.33
+      ]
+    },
+    {
+      "name": "MAE-B",
+      "anchor": false,
+      "c0_raw": 0.938,
+      "c0_lapl": 0.022,
+      "raw": [
+        53.8576,
+        52.5888
+      ],
+      "lapl": [
+        44.1304,
+        43.819
+      ]
+    },
+    {
+      "name": "CLIP-B/16",
+      "anchor": false,
+      "c0_raw": 0.704,
+      "c0_lapl": 0.246,
+      "raw": [
+        49.181,
+        48.9208
+      ],
+      "lapl": [
+        45.2054,
+        46.1921
+      ]
+    },
+    {
+      "name": "DINOv3-H+",
+      "anchor": false,
+      "c0_raw": 0.682,
+      "c0_lapl": 0.033,
+      "raw": [
+        44.7733,
+        46.4064
+      ],
+      "lapl": [
+        43.8479,
+        44.6591
+      ]
+    },
+    {
+      "name": "PE-Spatial-B",
+      "anchor": false,
+      "c0_raw": 0.575,
+      "c0_lapl": 0.017,
+      "raw": [
+        45.993,
+        45.8786
+      ],
+      "lapl": [
+        45.1582,
+        45.4534
+      ]
+    },
+    {
+      "name": "DINOv3-L",
+      "anchor": false,
+      "c0_raw": 0.476,
+      "c0_lapl": 0.028,
+      "raw": [
+        42.5757,
+        43.2648
+      ],
+      "lapl": [
+        43.4926,
+        42.0332
+      ]
+    },
+    {
+      "name": "PE-Core-L",
+      "anchor": false,
+      "c0_raw": 0.403,
+      "c0_lapl": 0.03,
+      "raw": [
+        50.0665,
+        48.428
+      ],
+      "lapl": [
+        49.5055,
+        50.0676
+      ]
+    },
+    {
+      "name": "DINOv2-L",
+      "anchor": false,
+      "c0_raw": 0.254,
+      "c0_lapl": 0.009,
+      "raw": [
+        42.7152,
+        42.3672
+      ],
+      "lapl": [
+        41.5452,
+        41.6684
+      ]
+    },
+    {
+      "name": "DINOv2-S",
+      "anchor": false,
+      "c0_raw": 0.244,
+      "c0_lapl": 0.009,
+      "raw": [
+        42.4501,
+        43.9227
+      ],
+      "lapl": [
+        41.6603,
+        42.313
+      ]
+    }
+  ]
+}

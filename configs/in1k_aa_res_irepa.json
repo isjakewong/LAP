@@ -1,0 +1,7 @@
+{
+  "model": "SiT-B/2",
+  "conv_projector": true,
+  "spatial_norm": true,
+  "target_mode": "residual",
+  "checkpointing_steps": 100000
+}

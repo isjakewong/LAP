@@ -1,0 +1,5 @@
+{
+  "model": "SiT-B/2",
+  "reg_cls_beta": 0.03,
+  "checkpointing_steps": 100000
+}

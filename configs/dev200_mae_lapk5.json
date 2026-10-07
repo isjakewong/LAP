@@ -1,0 +1,9 @@
+{
+  "model": "SiT-B/2",
+  "data_dir": "data/in256_dev200",
+  "enc_type": "mae-vit-l",
+  "target_mode": "purified",
+  "purifier_ckpt": "assets/purifier_mae_k5.pt",
+  "checkpointing_steps": 25000,
+  "max_train_steps": 50000
+}

@@ -1,0 +1,8 @@
+{
+  "model": "SiT-B/2",
+  "proj_coeff": 0.0,
+  "vae_path": "zelaki/eq-vae",
+  "latents_stats": "assets/eqvae-latents-stats.pt",
+  "vae_encode_online": true,
+  "checkpointing_steps": 25000
+}

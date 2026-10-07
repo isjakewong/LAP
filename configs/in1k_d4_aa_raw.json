@@ -1,0 +1,5 @@
+{
+  "model": "SiT-B/2",
+  "encoder_depth": 4,
+  "checkpointing_steps": 100000
+}

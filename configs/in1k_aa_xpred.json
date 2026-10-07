@@ -1,0 +1,5 @@
+{
+  "model": "SiT-B/2",
+  "target_mode": "xpredictive",
+  "checkpointing_steps": 100000
+}

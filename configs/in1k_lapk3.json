@@ -1,0 +1,6 @@
+{
+  "model": "SiT-B/2",
+  "target_mode": "purified",
+  "purifier_ckpt": "assets/purifier1k_dinov2_k3.pt",
+  "checkpointing_steps": 100000
+}

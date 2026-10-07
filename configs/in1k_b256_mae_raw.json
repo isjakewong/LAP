@@ -1,0 +1,6 @@
+{
+  "model": "SiT-B/2",
+  "gradient_accumulation_steps": 4,
+  "enc_type": "mae-vit-l",
+  "checkpointing_steps": 25000
+}

@@ -1,0 +1,135 @@
+{
+  "tag": "in1k",
+  "data_dir": "data/in1k_256",
+  "batches": 32,
+  "images": 2048,
+  "seed": 0,
+  "targets": {
+    "mae-vit-l": {
+      "raw": {
+        "C0": 0.9291256335625138,
+        "cos_mean_token_readout": 0.9289937019348145,
+        "cos_best_constant_direction_check": 0.9289939403533936,
+        "mean_token_norm": 250.22788722450883,
+        "E_inv_norm": 0.004011021335976057,
+        "min_token_norm": 179.97283434433456,
+        "n_tokens": 524288
+      },
+      "centered": {
+        "C0": 0.01619910799132859,
+        "cos_mean_token_readout": 0.0015682176453992724,
+        "cos_best_constant_direction_check": 0.028332270681858063,
+        "mean_token_norm": 92.68707944077664,
+        "E_inv_norm": 0.010955634752942648,
+        "min_token_norm": 55.706376028005934,
+        "n_tokens": 524288
+      },
+      "lapl": {
+        "C0": 0.01717737657409812,
+        "cos_mean_token_readout": -0.007611652370542288,
+        "cos_best_constant_direction_check": 0.03029918670654297,
+        "mean_token_norm": 87.42394609853154,
+        "E_inv_norm": 0.011709637523100709,
+        "min_token_norm": 45.44226088533756,
+        "n_tokens": 524288
+      },
+      "lapn:purifier1k_mae_k5.pt": {
+        "C0": 0.009550258319923859,
+        "cos_mean_token_readout": 0.006498805712908506,
+        "cos_best_constant_direction_check": 0.0019318492850288749,
+        "mean_token_norm": 74.42984459561394,
+        "E_inv_norm": 0.014015624938408515,
+        "min_token_norm": 24.89807078521308,
+        "n_tokens": 524288
+      },
+      "_seconds": 35.7552695274353
+    },
+    "dinov2-vit-b": {
+      "raw": {
+        "C0": 0.16234847703867658,
+        "cos_mean_token_readout": 0.1620403677225113,
+        "cos_best_constant_direction_check": 0.1624990552663803,
+        "mean_token_norm": 48.50690516754257,
+        "E_inv_norm": 0.020682560542022402,
+        "min_token_norm": 27.039671336794374,
+        "n_tokens": 524288
+      },
+      "centered": {
+        "C0": 0.004803933102290625,
+        "cos_mean_token_readout": 0.003288648324087262,
+        "cos_best_constant_direction_check": 0.022039923816919327,
+        "mean_token_norm": 47.76242089755737,
+        "E_inv_norm": 0.021011660675354447,
+        "min_token_norm": 27.28958000808981,
+        "n_tokens": 524288
+      },
+      "lapl": {
+        "C0": 0.004864307210931534,
+        "cos_mean_token_readout": 0.0020145047456026077,
+        "cos_best_constant_direction_check": 0.022521061822772026,
+        "mean_token_norm": 47.22529776132201,
+        "E_inv_norm": 0.02125468084826744,
+        "min_token_norm": 27.671421037684073,
+        "n_tokens": 524288
+      },
+      "xpred": {
+        "C0": 0.7329664534062592,
+        "cos_mean_token_readout": 0.7290520668029785,
+        "cos_best_constant_direction_check": 0.7292342185974121,
+        "mean_token_norm": 10.898303271561884,
+        "E_inv_norm": 0.09380345136550845,
+        "min_token_norm": 7.910759946274392,
+        "n_tokens": 524288
+      },
+      "lapn:purifier1k_dinov2_k3.pt": {
+        "C0": 0.01141072242643396,
+        "cos_mean_token_readout": 0.005667263641953468,
+        "cos_best_constant_direction_check": 0.003869883716106415,
+        "mean_token_norm": 45.31829601597731,
+        "E_inv_norm": 0.022211541817153818,
+        "min_token_norm": 21.54824300625893,
+        "n_tokens": 524288
+      },
+      "_seconds": 11.697022676467896
+    },
+    "clip-vit-L": {
+      "raw": {
+        "C0": 0.5853875774732153,
+        "cos_mean_token_readout": 0.5859099626541138,
+        "cos_best_constant_direction_check": 0.586834192276001,
+        "mean_token_norm": 25.91284356596859,
+        "E_inv_norm": 0.04174183118356946,
+        "min_token_norm": 14.950771310205644,
+        "n_tokens": 524288
+      },
+      "centered": {
+        "C0": 0.08209303314479227,
+        "cos_mean_token_readout": 0.023565014824271202,
+        "cos_best_constant_direction_check": 0.055309318006038666,
+        "mean_token_norm": 21.35596989004372,
+        "E_inv_norm": 0.05168814926021586,
+        "min_token_norm": 11.267653101120196,
+        "n_tokens": 524288
+      },
+      "lapl": {
+        "C0": 0.08239168427762583,
+        "cos_mean_token_readout": 0.01475105993449688,
+        "cos_best_constant_direction_check": 0.053898219019174576,
+        "mean_token_norm": 21.268568895562485,
+        "E_inv_norm": 0.05187298175151112,
+        "min_token_norm": 10.58725639935227,
+        "n_tokens": 524288
+      },
+      "lapn:purifier1k_clip_k3.pt": {
+        "C0": 0.06626941888248443,
+        "cos_mean_token_readout": 0.016780905425548553,
+        "cos_best_constant_direction_check": 0.028292253613471985,
+        "mean_token_norm": 21.111654894256695,
+        "E_inv_norm": 0.0521661120088045,
+        "min_token_norm": 9.555708154198644,
+        "n_tokens": 524288
+      },
+      "_seconds": 39.41540718078613
+    }
+  }
+}

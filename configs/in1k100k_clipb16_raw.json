@@ -1,0 +1,5 @@
+{
+  "model": "SiT-B/2",
+  "enc_type": "clip16-vit-b",
+  "checkpointing_steps": 25000
+}

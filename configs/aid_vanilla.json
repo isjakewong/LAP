@@ -1,0 +1,7 @@
+{
+  "model": "SiT-B/2",
+  "data_dir": "data/aid_256",
+  "enc_type": "satmae-vit-l",
+  "proj_coeff": 0.0,
+  "max_train_steps": 50000
+}

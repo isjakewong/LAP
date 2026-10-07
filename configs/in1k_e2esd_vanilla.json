@@ -1,0 +1,8 @@
+{
+  "model": "SiT-B/2",
+  "proj_coeff": 0.0,
+  "vae_path": "REPA-E/e2e-sdvae-hf",
+  "latents_stats": "assets/e2e-sdvae-400k-latents-stats.pt",
+  "vae_encode_online": true,
+  "checkpointing_steps": 100000
+}
