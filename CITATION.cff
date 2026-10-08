@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: Please cite the accompanying paper if you use this code.
 title: 'Purify Before You Align: Improving Representation Alignment for Diffusion Models'
 type: software
-repository-code: 'https://github.com/isjakewong/LAP'
+repository-code: 'https://github.com/yingheng-wang/LAP'
 authors:
   - family-names: Wang
     given-names: Yingheng

@@ -1,9 +1,9 @@
 # <img src="docs/lap_icon.svg" height="32" alt="LAP"> [Purify Before You Align: Improving Representation Alignment for Diffusion Models](https://arxiv.org/abs/ARXIV_ID)
-By [Yingheng Wang](https://isjakewong.github.io/), Yaoqiang Li, Yaqin Wu, [Junwen Bai](https://junwenbai.github.io/), [Jiatao Gu](https://jiataogu.me/), [Christopher De Sa](https://www.cs.cornell.edu/~cdesa/), [Volodymyr Kuleshov](https://www.cs.cornell.edu/~kuleshov/)
+By [Yingheng Wang](https://yingheng-wang.com/), Yaoqiang Li, Yaqin Wu, [Junwen Bai](https://junwenbai.github.io/), [Jiatao Gu](https://jiataogu.me/), [Christopher De Sa](https://www.cs.cornell.edu/~cdesa/), [Volodymyr Kuleshov](https://www.cs.cornell.edu/~kuleshov/)
 
 [![arXiv](https://img.shields.io/badge/arXiv-ARXIV_ID-b31b1b.svg)](https://arxiv.org/abs/ARXIV_ID)
 [![HuggingFace](https://img.shields.io/badge/HuggingFace_🤗-LAP_checkpoints-orange)](https://huggingface.co/yingheng/LAP-checkpoints)
-[![CPU checks](https://github.com/isjakewong/LAP/actions/workflows/tests.yml/badge.svg)](https://github.com/isjakewong/LAP/actions/workflows/tests.yml)
+[![CPU checks](https://github.com/yingheng-wang/LAP/actions/workflows/tests.yml/badge.svg)](https://github.com/yingheng-wang/LAP/actions/workflows/tests.yml)
 
 ![LAP overview](docs/framework.png)
 
